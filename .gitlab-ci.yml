@@ -1,0 +1,251 @@
+stages:
+  - exe
+  - zip
+  - ftp
+  
+#-------------------------------------------------------------------------------
+# exe 
+#-------------------------------------------------------------------------------
+
+Build-Exe:
+    stage: exe
+    environment: 
+        name: win
+    tags:
+        - ScopeFun
+    artifacts:
+      name: "ScopeFun-Win64"
+      paths: 
+         - sfExe/*.exe
+         - sfExe/*.sha512
+      expire_in: 1 day
+    cache:
+        key: "%CI_COMMIT_REF_SLUG%"
+        untracked: true
+    allow_failure: true
+    script:
+        - powershell New-Item -ItemType Directory -name sfExe -Force
+        - cd sfExe
+        - powershell Remove-Item *.exe
+        - powershell Remove-Item *.sha512
+        - cmake -G "MinGW Makefiles" -D SCOPEFUN_VERSION_MAJOR="%VERSION_MAJOR%" -D SCOPEFUN_VERSION_MINOR="%VERSION_MINOR%" -D SCOPEFUN_VERSION_MICRO="%VERSION_MICRO%" -D CMAKE_BUILD_TYPE="Release" -D CPACK_SOURCE_ZIP="false" -S .. -B .
+        - set "PATH=%PATH%;c:\msys\1.0\bin"
+        - mingw32-make package
+    only:
+        - master
+
+Build-Exe-Mac:
+    stage: exe
+    environment: 
+        name: mac
+    tags:
+        - ScopeFunMac
+    cache:
+        key: "${CI_COMMIT_REF_SLUG}"
+        untracked: true
+    artifacts:
+      name: "ScopeFun-Mac64"
+      paths: 
+         - sfExe/*Darwin.dmg
+         - sfExe/*Darwin.dmg.sha512
+      expire_in: 1 day
+    allow_failure: true
+    script:
+        - mkdir -p sfExe
+        - cd sfExe
+        - rm -f *.dmg
+        - rm -f *.sha512
+        - chmod +x ../lib/wxWidgets-3.0.4/src/stc/gen_iface.py
+        - chmod +x ../lib/libusb-1.0.22/install-sh
+        - PATH="/Applications/CMake.app/Contents/bin":"$PATH"
+        - cmake -G "Unix Makefiles" -D SCOPEFUN_VERSION_MAJOR="$VERSION_MAJOR" -D SCOPEFUN_VERSION_MINOR="$VERSION_MINOR" -D SCOPEFUN_VERSION_MICRO="$VERSION_MICRO" -D CMAKE_BUILD_TYPE="Release" -D CMAKE_VERBOSE_MAKEFILE="true" -D CPACK_BINARY_DRAGNDROP="true" -S "$CI_BUILDS_DIR.." -B.
+        - make package
+    only:
+        - master
+
+Build-Exe-Linux:
+    stage: exe
+    environment: 
+        name: linux
+    tags:
+        - ScopeFunLinux
+    artifacts:
+      name: "ScopeFun-Linux64"
+      paths: 
+         - sfExe/*.deb
+         - sfExe/*.sha512
+      expire_in: 1 day
+    cache:
+        key: "$CI_COMMIT_REF_SLUG"
+        untracked: true
+    allow_failure: true
+    script:
+        - mkdir -p sfExe
+        - cd sfExe
+        - rm -f *.deb
+        - rm -f *.sha512
+        - chmod +x ../lib/wxWidgets-3.0.4/src/stc/gen_iface.py
+        - cmake -G "Unix Makefiles" -D SCOPEFUN_VERSION_MAJOR="$VERSION_MAJOR" -D SCOPEFUN_VERSION_MINOR="$VERSION_MINOR" -D SCOPEFUN_VERSION_MICRO="$VERSION_MICRO" -D CMAKE_BUILD_TYPE="Release" -D CPACK_BINARY_DEB="true" -D CPACK_BINARY_TZ="false" -D CPACK_BINARY_TGZ="false" -D CPACK_BINARY_STGZ="false" ..
+        - make package
+    only:
+        - master
+
+#-------------------------------------------------------------------------------
+# zip 
+#-------------------------------------------------------------------------------
+
+Zip-Source:
+    stage: zip
+    environment: 
+        name: win
+    tags:
+        - ScopeFun
+    cache: {}
+    allow_failure: true
+    artifacts:
+      name: "ScopeFun-Src-Win"
+      paths: 
+         - sfSrc/*.7z
+         - sfSrc/*.sha512
+      expire_in: 1 day
+    script:
+        - powershell New-Item -ItemType Directory -name sfSrc -Force
+        - cd sfSrc
+        - powershell Remove-Item *.7z
+        - powershell Remove-Item *.sha512
+        - cmake -G "MinGW Makefiles" -D SCOPEFUN_VERSION_MAJOR="%VERSION_MAJOR%" -D SCOPEFUN_VERSION_MINOR="%VERSION_MINOR%" -D SCOPEFUN_VERSION_MICRO="%VERSION_MICRO%" -D CMAKE_BUILD_TYPE="Release" -D CPACK_SOURCE_ZIP="false" -S .. -B .
+        - set "PATH=%PATH%;c:\msys\1.0\bin"
+        - mingw32-make package_source
+    when: always
+    only:
+        - master
+        
+Zip-Source-Linux:
+    stage: zip
+    environment: linux
+    tags:
+        - ScopeFunLinux
+    cache: {}
+    artifacts:
+      name: "ScopeFun-Src-Linux"
+      paths: 
+         - sfSrc/*.gz
+         - sfSrc/*.sha512
+      expire_in: 1 day
+    dependencies: []
+    allow_failure: true
+    script:
+        - mkdir -p sfSrc
+        - cd sfSrc
+        - rm -f *.gz
+        - rm -f *.sha512
+        - cmake -G "Unix Makefiles" -D SCOPEFUN_VERSION_MAJOR="$VERSION_MAJOR" -D SCOPEFUN_VERSION_MINOR="$VERSION_MINOR" -D SCOPEFUN_VERSION_MICRO="$VERSION_MICRO" -D CMAKE_BUILD_TYPE="Release" -D CPACK_SOURCE_ZIP="false" -D CPACK_SOURCE_RPM="false" -D CPACK_SOURCE_TBZ2="false" -D CPACK_SOURCE_TXZ="false" -D CPACK_SOURCE_TZ="false" -D CPACK_SOURCE_TGZ="true" ..
+        - make package_source
+    when: always
+    only:
+        - master
+        
+Zip-Source-Mac:
+    stage: zip
+    environment: 
+        name: mac
+    tags:
+        - ScopeFunMac
+    cache: {}
+    artifacts:
+      name: "ScopeFun-Src-Mac"
+      paths: 
+         - sfSrc/*.gz
+         - sfSrc/*.sha512
+      expire_in: 1 day
+    dependencies: []
+    allow_failure: true
+    script:
+        - mkdir -p sfSrc
+        - cd sfSrc
+        - rm -f *.gz
+        - rm -f *.sha512
+        - PATH="/Applications/CMake.app/Contents/bin":"$PATH"
+        - cmake -G "Unix Makefiles" -D SCOPEFUN_VERSION_MAJOR="$VERSION_MAJOR" -D SCOPEFUN_VERSION_MINOR="$VERSION_MINOR" -D SCOPEFUN_VERSION_MICRO="$VERSION_MICRO" -D CMAKE_BUILD_TYPE="Release" -D CPACK_SOURCE_ZIP="false" -D CPACK_SOURCE_RPM="false" -D CPACK_SOURCE_TBZ2="false" -D CPACK_SOURCE_TXZ="false" -D CPACK_SOURCE_TZ="false" -D CPACK_SOURCE_TGZ="true" -S .. -B .
+        - make package_source
+    when: always
+    only:
+        - master
+        
+#-------------------------------------------------------------------------------
+# ftp
+#-------------------------------------------------------------------------------
+
+Upload-Ftp-Linux:
+    stage: ftp
+    environment:
+        name: linux
+    tags:
+        - ScopeFunLinux
+    cache: {}
+    dependencies:
+        - Build-Exe-Linux
+        - Zip-Source-Linux
+    script:
+        - cd sfSrc
+        - COMMIT_TIME=$(git show -s --format=%ct $CI_COMMIT_SHA)
+        - mkdir -p $COMMIT_TIME/Linux
+        - cp ./../sfExe/*.deb     $COMMIT_TIME/Linux
+        - cp ./../sfExe/*.sha512  $COMMIT_TIME/Linux
+        - cp *.gz                 $COMMIT_TIME/Linux
+        - cp *.sha512             $COMMIT_TIME/Linux
+        - ncftpput -z -R -u $FTP_USERNAME -p $FTP_PASSWORD ftp.scopefun.com Versions $COMMIT_TIME
+    when: always
+    only:
+        - master
+              
+Upload-Ftp-Mac:
+    stage: ftp
+    environment: 
+        name: mac
+    tags:
+        - ScopeFunMac
+    cache: {}
+    dependencies:
+        - Build-Exe-Mac
+        - Zip-Source-Mac
+    script:
+        - cd sfSrc
+        - COMMIT_TIME=$(git show -s --format=%ct $CI_COMMIT_SHA)
+        - mkdir -p $COMMIT_TIME/Mac
+        - cp ./../sfExe/*.dmg     $COMMIT_TIME/Mac
+        - cp ./../sfExe/*.sha512  $COMMIT_TIME/Mac
+        - cp *.gz                 $COMMIT_TIME/Mac
+        - cp *.sha512             $COMMIT_TIME/Mac
+        - ncftpput -z -R -u $FTP_USERNAME -p $FTP_PASSWORD ftp.scopefun.com Versions $COMMIT_TIME
+    when: always
+    only:
+        - master
+     
+Upload-Ftp:
+    stage: ftp
+    environment: 
+        name: win
+    tags:
+        - ScopeFun
+    cache: {}
+    dependencies:
+        - Build-Exe
+        - Zip-Source
+    script:
+        - cd sfSrc
+        - git show -s --pretty=format:%%ct %CI_COMMIT_SHA%>commit_time.txt
+        - set /p COMMIT_TIME=<commit_time.txt
+        - mkdir %COMMIT_TIME%\Windows
+        - copy %cd%\..\sfExe\*.exe     %COMMIT_TIME%\Windows
+        - copy %cd%\..\sfExe\*.sha512  %COMMIT_TIME%\Windows
+        - copy *.7z                    %COMMIT_TIME%\Windows
+        - copy *.sha512                %COMMIT_TIME%\Windows
+        - winscp /ini=nul /command "open ftp://%FTP_USERNAME%:%FTP_PASSWORD%@ftp.scopefun.com/ "^
+                                   "cd Versions"^
+                                   "put %COMMIT_TIME%"^
+                                   "close"^
+                                   "exit"
+    when: always
+    only:
+        - master

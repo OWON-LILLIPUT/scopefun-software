@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+<div style="width:99%;">
+  <canvas id="mycanvas"></canvas>
+</div>
+</body>
+<script type="text/javascript">
+//create x-axis labels array
+let xArray = new Array(10000);
+for(let i=0; i<10000;i++){
+    xArray[i] = i;
+}
+
+// create initial empty chart
+var ctx_live = document.getElementById("mycanvas");
+var myChart = new Chart(ctx_live, {
+  type: 'line',
+  data: {
+    labels: xArray,
+    datasets: [{
+      data: Array(10000).fill(100),
+	  borderWidth: 0,
+      borderColor:'#00c0ef',
+      label: 'ch1',
+	  fill: false,
+	  pointRadius: 0,
+    },{
+      data: Array(10000).fill(-100),
+	  borderWidth: 0,
+      borderColor:'#33cc33',
+      label: 'ch2',
+	  fill: false,
+	  pointRadius: 0,
+    }]
+  },
+  options: {
+    elements: {
+      line: {
+        tension: 0 // disables bezier curves
+      }
+    },
+    responsive: true,
+    title: {
+      display: true,
+      text: "ScopeFun oscilloscope",
+    },
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 10
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          max : 511,
+          min : -512
+        }
+      }]
+    },
+    animation: {
+      duration: 0 // general animation time
+    },
+    hover: {
+      animationDuration: 0 // duration of animations when hovering an item
+    },
+    responsiveAnimationDuration: 0 // animation duration after a resize
+  }
+});
+
+//this is the function that fetches data from scopefun server
+var getData = function() {
+    $.getJSON( "http://192.168.1.2/samples.json", function(data) {
+        //process your data to pull out what you plan to use to update the chart
+        var samples_json = data;
+        //console.log(samples_json["ch1"]);
+        // add new data points to chart's underlying data structures
+        myChart.data.datasets[0].data = samples_json['ch1'];
+        myChart.data.datasets[1].data = samples_json['ch2'];
+        // re-render the chart
+        myChart.update();
+    });
+}
+
+// get new data every second
+setInterval(getData, 1000);
+</script>
+</html>

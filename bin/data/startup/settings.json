@@ -1,0 +1,45 @@
+{
+	"render":	{
+		"shaders21":	0,
+		"vertexBufferSizeMegaByte":	32,
+		"depthBuffer":	1,
+		"fps" : 0,
+        "eventTimer" : 0.033,
+        "threadCount" : 1
+	}, 
+    "priority": {   
+        "capture":1,
+        "update":1,
+		"render":1,
+		"main":1
+    },
+    "delay": {
+		"capture"  : 1,
+        "update" : 1,		
+		"render"  : 1,
+		"main" : 100
+    },
+	"speed": {
+		"low":    60,
+		"medium": 200,
+		"high":   500
+	},
+    "memory": {
+	   "history":  1024,
+       "frame": 16,
+       "rld": 16
+    },
+	"history":	{
+		"frameCount":	10000,
+		"frameDisplay":	16,
+		"frameLoadSave":	16,
+		"frameClipboard":	16
+	},
+	"window":	{
+		"debug" : 1,
+		"displayWidth":	 600,
+		"displayHeight": 900,
+		"controlWidth":	 800,
+		"controlHeight": 900
+	}
+}

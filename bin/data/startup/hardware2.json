@@ -1,0 +1,217 @@
+{
+	"usb":	{
+		"guid":	"0xae18aa60, 0x0000, 0x0000, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00",
+		"vendor":	7504,
+		"product":	24836,
+		"serial":	42,
+		"firmware":	"data/firmware/fx3.img"
+	},
+	"fpga":	{
+		"firmware":	"data/firmware/fpga2.bin",
+		"etsIndex":	11,
+		"etsCount":	7
+	},
+	"digital":	{
+		"voltageCoeficient":	152
+	},
+	"generator":	{
+		"fs":	200000000
+	},
+	"reference":	{
+		"invertCh0":	0,
+		"invertCh1":	0,
+		"framesPerCapture":	4,
+		"maxIterations":	64,
+		"exitPercentage":	0.100000,
+		"offsetMax":	125,
+		"offsetMin":	-125,
+		"generatorReference":	0,
+		"generatorMax":	25,
+		"generatorMin":	-25,
+		"generatorStep":	0.001000,
+		"stepMin":	460,
+		"stepMax":	480,
+		"gainValue":	{
+			"volt2":	1415,
+			"volt1":	1771,
+			"mili500":	2123,
+			"mili200":	2587,
+			"mili100":	1412,
+			"mili50":	1767,
+			"mili20":	2244,
+			"mili10":	2608
+		},
+		"gainVoltage":	{
+			"volt2":	200,
+			"volt1":	200,
+			"mili500":	125.000000,
+			"mili200":	40.000000,
+			"mili100":	25.000000,
+			"mili50":	12.500000,
+			"mili20":	5.000000,
+			"mili10":	2.500000
+		},
+		"gainMin":	{
+			"volt2":	0,
+			"volt1":	0,
+			"mili500":	0,
+			"mili200":	0,
+			"mili100":	0,
+			"mili50":	0,
+			"mili20":	0,
+			"mili10":	0
+		},
+		"gainMax":	{
+			"volt2":	4095,
+			"volt1":	4095,
+			"mili500":	4095,
+			"mili200":	4095,
+			"mili100":	4095,
+			"mili50":	4095,
+			"mili20":	4095,
+			"mili10":	4095
+		},
+		"gainAttr":	{
+			"volt2":	0,
+			"volt1":	0,
+			"mili500":	0,
+			"mili200":	0,
+			"mili100":	1,
+			"mili50":	1,
+			"mili20":	1,
+			"mili10":	1
+		}
+	},
+	"callibratedNormal":	{
+		"offsetsCh0":	{
+			"volt2":	-47,
+			"volt1":	-48,
+			"mili500":	-51,
+			"mili200":	-60,
+			"mili100":	-47,
+			"mili50":	-48,
+			"mili20":	-52,
+			"mili10":	-61
+		},
+		"offsetsCh1":	{
+			"volt2":	-23,
+			"volt1":	-25,
+			"mili500":	-27,
+			"mili200":	-35,
+			"mili100":	-23,
+			"mili50":	-25,
+			"mili20":	-28,
+			"mili10":	-35
+		},
+		"voltageStepCh0":	{
+			"volt2":	-1.560007,
+			"volt1":	-0.779612,
+			"mili500":	-0.389757,
+			"mili200":	-0.156131,
+			"mili100":	-0.078009,
+			"mili50":	-0.038975,
+			"mili20":	-0.015602,
+			"mili10":	-0.007792
+		},
+		"voltageStepCh1":	{
+			"volt2":	-1.554028,
+			"volt1":	-0.777067,
+			"mili500":	-0.388809,
+			"mili200":	-0.155311,
+			"mili100":	-0.077702,
+			"mili50":	-0.038853,
+			"mili20":	-0.015551,
+			"mili10":	-0.007767
+		},
+		"gainValueCh0":	{
+			"volt2":	1423,
+			"volt1":	1777,
+			"mili500":	2129,
+			"mili200":	2596,
+			"mili100":	1417,
+			"mili50":	1768,
+			"mili20":	2244,
+			"mili10":	2599
+		},
+		"gainValueCh1":	{
+			"volt2":	1425,
+			"volt1":	1779,
+			"mili500":	2129,
+			"mili200":	2587,
+			"mili100":	1419,
+			"mili50":	1770,
+			"mili20":	2241,
+			"mili10":	2594
+		},
+		"offsetsGenerator":	{
+			"channel0":	0,
+			"channel1":	-2
+		}
+	},
+	"callibrated500Mhz":	{
+		"offsetsCh0":	{
+			"volt2":	-47,
+			"volt1":	-48,
+			"mili500":	-51,
+			"mili200":	-60,
+			"mili100":	-47,
+			"mili50":	-48,
+			"mili20":	-52,
+			"mili10":	-61
+		},
+		"offsetsCh1":	{
+			"volt2":	-22,
+			"volt1":	-23,
+			"mili500":	-23,
+			"mili200":	-25,
+			"mili100":	-22,
+			"mili50":	-23,
+			"mili20":	-24,
+			"mili10":	-25
+		},
+		"voltageStepCh0":	{
+			"volt2":	-1.559967,
+			"volt1":	-0.779591,
+			"mili500":	-0.389756,
+			"mili200":	-0.156112,
+			"mili100":	-0.078005,
+			"mili50":	-0.038975,
+			"mili20":	-0.015601,
+			"mili10":	-0.007793
+		},
+		"voltageStepCh1":	{
+			"volt2":	-1.555050,
+			"volt1":	-0.777616,
+			"mili500":	-0.389141,
+			"mili200":	-0.155562,
+			"mili100":	-0.077740,
+			"mili50":	-0.038889,
+			"mili20":	-0.015540,
+			"mili10":	-0.007778
+		},
+		"gainValueCh0":	{
+			"volt2":	1423,
+			"volt1":	1777,
+			"mili500":	2129,
+			"mili200":	2596,
+			"mili100":	1417,
+			"mili50":	1768,
+			"mili20":	2242,
+			"mili10":	2599
+		},
+		"gainValueCh1":	{
+			"volt2":	1424,
+			"volt1":	1779,
+			"mili500":	2129,
+			"mili200":	2588,
+			"mili100":	1419,
+			"mili50":	1770,
+			"mili20":	2239,
+			"mili10":	2593
+		},
+		"offsetsGenerator":	{
+			"channel0":	0,
+			"channel1":	-2
+		}
+	}
+}

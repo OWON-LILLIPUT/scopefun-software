@@ -1,0 +1,13 @@
+/sfExe/*
+/sfSrc/*
+/bin/api/*
+/bin/*.exe
+/bin/*.pyd
+/lib/libusb-1.0.22/sfBuild64r/*
+/lib/libusb-1.0.22/src/*
+/lib/libusb-1.0.22/tmp/*
+/lib/SDL2-2.0.9/sfBuild64r/*
+/lib/SDL2-2.0.9/tmp/*
+/lib/wxWidgets-3.0.4/sfBuild64r/*
+/lib/wxWidgets-3.0.4/src/wxWidgets304-stamp/*
+/lib/wxWidgets-3.0.4/tmp/*

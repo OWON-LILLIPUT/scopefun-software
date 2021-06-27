@@ -1,0 +1,3 @@
+ScopeFun is an open source oscilloscope project.
+site: https://www.scopefun.com
+Authors: Dejan Priveršek and David Košenina

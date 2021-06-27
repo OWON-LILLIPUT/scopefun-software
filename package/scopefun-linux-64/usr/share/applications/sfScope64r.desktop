@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=false
+Comment=http://www.scopefun.com
+Path=/usr/lib/oscilloscope
+Exec=sfScope64r
+Name=sfScope64r
+Icon=/usr/lib/oscilloscope/oscilloscope256.png
